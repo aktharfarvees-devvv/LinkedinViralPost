@@ -1,0 +1,462 @@
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  TextInput,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
+import * as Clipboard from 'expo-clipboard';
+import { getPromptList, getPromptById } from './prompts';
+
+export default function App() {
+  const [selectedPrompt, setSelectedPrompt] = useState(null);
+  const [userInput, setUserInput] = useState('');
+  const [commentInputs, setCommentInputs] = useState({
+    postTopic: '',
+    postSummary: '',
+    comment: ''
+  });
+  const [output, setOutput] = useState('');
+  const [outputType, setOutputType] = useState('text'); // 'text' or 'json'
+  const [loading, setLoading] = useState(false);
+  const [step, setStep] = useState('prompt-selection'); // prompt-selection, input, output
+
+  const promptList = getPromptList();
+
+  const handleSelectPrompt = (promptId) => {
+    setSelectedPrompt(promptId);
+    setUserInput('');
+    setCommentInputs({ postTopic: '', postSummary: '', comment: '' });
+    setOutput('');
+    setOutputType('text');
+    
+    // For TITLE prompt, skip input and generate directly
+    if (promptId === 'TITLE') {
+      handleGenerateTitleOutput();
+    } else {
+      setStep('input');
+    }
+  };
+
+  const handleGenerateTitleOutput = async () => {
+    setLoading(true);
+    
+    try {
+      const prompt = getPromptById('TITLE');
+      // For title, we don't need user input - just return the template as output
+      setOutput(prompt.template);
+      setStep('output');
+    } catch (error) {
+      Alert.alert('Error', 'Failed to generate output');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGenerateOutput = async () => {
+    // Validate inputs based on prompt type
+    if (selectedPrompt === 'COMMENT') {
+      if (!commentInputs.postTopic.trim() || !commentInputs.postSummary.trim() || !commentInputs.comment.trim()) {
+        Alert.alert('Error', 'Please fill in all three fields');
+        return;
+      }
+    } else {
+      if (!userInput.trim()) {
+        Alert.alert('Error', 'Please enter your information');
+        return;
+      }
+    }
+
+    setLoading(true);
+    
+    try {
+      const prompt = getPromptById(selectedPrompt);
+      let processedPrompt = prompt.template;
+      
+      if (selectedPrompt === 'COMMENT') {
+        // Replace comment-specific placeholders
+        processedPrompt = processedPrompt
+          .replace('{{POST_TOPIC}}', commentInputs.postTopic.trim())
+          .replace('{{SHORT_SUMMARY}}', commentInputs.postSummary.trim())
+          .replace('{{PASTE_COMMENT_HERE}}', commentInputs.comment.trim())
+          .replace('{{USER_INPUT}}', commentInputs.comment.trim());
+      } else if (selectedPrompt === 'POST') {
+        // For POST, use the JSON template and replace with user input
+        processedPrompt = prompt.jsonTemplate || processedPrompt;
+        // Replace topic placeholder in JSON
+        processedPrompt = typeof processedPrompt === 'string' 
+          ? processedPrompt.replace('{{INSERT_TITLE_HERE}}', userInput.trim())
+          : processedPrompt;
+        setOutputType('json');
+      } else {
+        // For IMAGE_PROMPT and other text prompts
+        processedPrompt = processedPrompt.replace('{{USER_INPUT}}', userInput.trim());
+      }
+
+      setOutput(processedPrompt);
+      setStep('output');
+    } catch (error) {
+      Alert.alert('Error', 'Failed to generate output');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCopyToClipboard = async () => {
+    await Clipboard.setStringAsync(output);
+    Alert.alert('Success', 'Output copied to clipboard!');
+  };
+
+  const handleReset = () => {
+    setSelectedPrompt(null);
+    setUserInput('');
+    setOutput('');
+    setStep('prompt-selection');
+  };
+
+  // Step 1: Prompt Selection
+  if (step === 'prompt-selection') {
+    return (
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.title}>LinkedIn Prompt Generator</Text>
+          <Text style={styles.subtitle}>Select a prompt type to get started</Text>
+        </View>
+
+        <ScrollView style={styles.promptList} showsVerticalScrollIndicator={false}>
+          {promptList.map((prompt) => (
+            <TouchableOpacity
+              key={prompt.id}
+              style={styles.promptCard}
+              onPress={() => handleSelectPrompt(prompt.id)}
+            >
+              <Text style={styles.promptCardTitle}>{prompt.name}</Text>
+              <Text style={styles.promptCardDescription}>{prompt.description}</Text>
+              <Text style={styles.promptCardArrow}>→</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
+    );
+  }
+
+  // Step 2: Input
+  if (step === 'input') {
+    const currentPrompt = getPromptById(selectedPrompt);
+    
+    // Render different input forms based on prompt type
+    if (selectedPrompt === 'COMMENT') {
+      return (
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <TouchableOpacity onPress={() => setStep('prompt-selection')}>
+              <Text style={styles.backButton}>← Back</Text>
+            </TouchableOpacity>
+            <Text style={styles.title}>{currentPrompt.name}</Text>
+            <Text style={styles.subtitle}>{currentPrompt.description}</Text>
+          </View>
+
+          <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+            <View style={styles.inputSection}>
+              <Text style={styles.inputLabel}>Original Post Topic:</Text>
+              <TextInput
+                style={styles.textInput}
+                placeholder="E.g., AI + Software Engineering"
+                placeholderTextColor="#999"
+                multiline
+                numberOfLines={2}
+                value={commentInputs.postTopic}
+                onChangeText={(text) => setCommentInputs({ ...commentInputs, postTopic: text })}
+                textAlignVertical="top"
+              />
+            </View>
+
+            <View style={styles.inputSection}>
+              <Text style={styles.inputLabel}>Original Post Summary:</Text>
+              <TextInput
+                style={styles.textInput}
+                placeholder="Brief summary of the post..."
+                placeholderTextColor="#999"
+                multiline
+                numberOfLines={3}
+                value={commentInputs.postSummary}
+                onChangeText={(text) => setCommentInputs({ ...commentInputs, postSummary: text })}
+                textAlignVertical="top"
+              />
+            </View>
+
+            <View style={styles.inputSection}>
+              <Text style={styles.inputLabel}>Comment Received:</Text>
+              <TextInput
+                style={styles.textInput}
+                placeholder="Paste the comment you want to reply to..."
+                placeholderTextColor="#999"
+                multiline
+                numberOfLines={4}
+                value={commentInputs.comment}
+                onChangeText={(text) => setCommentInputs({ ...commentInputs, comment: text })}
+                textAlignVertical="top"
+              />
+            </View>
+
+            <TouchableOpacity
+              style={[styles.button, styles.generateButton]}
+              onPress={handleGenerateOutput}
+              disabled={loading}
+            >
+              {loading ? (
+                <ActivityIndicator color="#fff" />
+              ) : (
+                <Text style={styles.buttonText}>Generate Reply</Text>
+              )}
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
+      );
+    }
+    
+    // Default single input form for other prompts
+    return (
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => setStep('prompt-selection')}>
+            <Text style={styles.backButton}>← Back</Text>
+          </TouchableOpacity>
+          <Text style={styles.title}>{currentPrompt.name}</Text>
+          <Text style={styles.subtitle}>{currentPrompt.description}</Text>
+        </View>
+
+        <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+          <View style={styles.inputSection}>
+            <Text style={styles.inputLabel}>
+              {selectedPrompt === 'IMAGE_PROMPT' ? 'Enter your post theme or concept:' : 'Enter your information:'}
+            </Text>
+            <TextInput
+              style={styles.textInput}
+              placeholder="Type or paste your content here..."
+              placeholderTextColor="#999"
+              multiline
+              numberOfLines={8}
+              value={userInput}
+              onChangeText={setUserInput}
+              textAlignVertical="top"
+            />
+          </View>
+
+          <TouchableOpacity
+            style={[styles.button, styles.generateButton]}
+            onPress={handleGenerateOutput}
+            disabled={loading}
+          >
+            {loading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={styles.buttonText}>Generate Output</Text>
+            )}
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
+    );
+  }
+
+  // Step 3: Output
+  if (step === 'output') {
+    return (
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <TouchableOpacity 
+            onPress={() => {
+              if (selectedPrompt === 'TITLE') {
+                setStep('prompt-selection');
+              } else {
+                setStep('input');
+              }
+            }}
+          >
+            <Text style={styles.backButton}>
+              {selectedPrompt === 'TITLE' ? '← Back' : '← Edit Input'}
+            </Text>
+          </TouchableOpacity>
+          <Text style={styles.title}>Generated Output</Text>
+          <Text style={styles.subtitle}>Ready to copy and use</Text>
+        </View>
+
+        <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+          <View style={styles.outputSection}>
+            <Text style={styles.outputLabel}>
+              {outputType === 'json' ? 'JSON Prompt Template:' : 'Your Content:'}
+            </Text>
+            <View style={styles.outputBox}>
+              <Text style={styles.outputText}>
+                {typeof output === 'string' 
+                  ? output 
+                  : JSON.stringify(output, null, 2)
+                }
+              </Text>
+            </View>
+          </View>
+
+          <TouchableOpacity
+            style={[styles.button, styles.copyButton]}
+            onPress={handleCopyToClipboard}
+          >
+            <Text style={styles.buttonText}>📋 Copy to Clipboard</Text>
+          </TouchableOpacity>
+
+          {selectedPrompt !== 'TITLE' && (
+            <TouchableOpacity
+              style={[styles.button, styles.regenerateButton]}
+              onPress={() => setStep('input')}
+            >
+              <Text style={styles.buttonText}>Edit & Regenerate</Text>
+            </TouchableOpacity>
+          )}
+
+          <TouchableOpacity
+            style={[styles.button, styles.resetButton]}
+            onPress={handleReset}
+          >
+            <Text style={styles.buttonText}>Start Over</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f8f9fa',
+  },
+  header: {
+    backgroundColor: '#0a66c2',
+    paddingTop: 50,
+    paddingBottom: 20,
+    paddingHorizontal: 16,
+  },
+  backButton: {
+    color: '#fff',
+    fontSize: 16,
+    marginBottom: 12,
+    fontWeight: '600',
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 4,
+  },
+  subtitle: {
+    fontSize: 14,
+    color: '#e0e0e0',
+  },
+  promptList: {
+    flex: 1,
+    padding: 12,
+  },
+  promptCard: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
+    borderLeftWidth: 4,
+    borderLeftColor: '#0a66c2',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  promptCardTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#0a66c2',
+    marginBottom: 4,
+  },
+  promptCardDescription: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 8,
+  },
+  promptCardArrow: {
+    fontSize: 20,
+    color: '#0a66c2',
+    fontWeight: 'bold',
+  },
+  content: {
+    flex: 1,
+    padding: 16,
+  },
+  inputSection: {
+    marginBottom: 20,
+  },
+  inputLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 8,
+  },
+  textInput: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 14,
+    color: '#333',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    minHeight: 150,
+  },
+  outputSection: {
+    marginBottom: 20,
+  },
+  outputLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 8,
+  },
+  outputBox: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    minHeight: 200,
+  },
+  outputText: {
+    fontSize: 14,
+    color: '#333',
+    lineHeight: 20,
+  },
+  button: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    marginBottom: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  generateButton: {
+    backgroundColor: '#0a66c2',
+  },
+  copyButton: {
+    backgroundColor: '#28a745',
+  },
+  regenerateButton: {
+    backgroundColor: '#ffc107',
+  },
+  resetButton: {
+    backgroundColor: '#6c757d',
+    marginBottom: 30,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});

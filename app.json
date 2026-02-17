@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "LinkedIn Prompt Generator",
+    "slug": "linkedin-prompt-generator",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTabletOS": true,
+      "bundleIdentifier": "com.linkedinprompt.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.linkedinprompt.app"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f7518203-72be-4547-9e9b-666c94d32cb2"
+      }
+    }
+  }
+}

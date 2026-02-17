@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1080" height="1920" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1080" height="1920" fill="#0a66c2"/>
+  <text x="540" y="960" font-size="150" fill="white" text-anchor="middle" dominant-baseline="middle" font-weight="bold">Prompt Generator</text>
+</svg>
