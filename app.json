@@ -10,23 +10,17 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTabletOS": true,
-      "bundleIdentifier": "com.linkedinprompt.app",
-      "runtimeVersion": {
-        "policy": "appVersion"
-      }
+      "supportsTablet": true,
+      "bundleIdentifier": "com.linkedinprompt.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.linkedinprompt.app",
-      "runtimeVersion": "1.0.0"
+      "package": "com.linkedinprompt.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -42,6 +36,8 @@
       "checkAutomatically": "ON_LOAD",
       "fallbackToCacheTimeout": 0
     },
-    "runtimeVersion": "1.0.0"
+    "runtimeVersion": {
+      "policy": "appVersion"
+    }
   }
 }
