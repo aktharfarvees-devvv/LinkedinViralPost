@@ -31,7 +31,7 @@ Constraints:
 - No quotation marks
 - Must preserve AI + Software Engineering Evolution context
 - Must feel intellectually sharp and credible
-- Must feel new and non-template
+- Must feel new and non-template 
 
 Output:
 Return ONLY the final title.
