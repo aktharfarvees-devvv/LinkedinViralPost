@@ -15,14 +15,18 @@
     ],
     "ios": {
       "supportsTabletOS": true,
-      "bundleIdentifier": "com.linkedinprompt.app"
+      "bundleIdentifier": "com.linkedinprompt.app",
+      "runtimeVersion": {
+        "policy": "appVersion"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.linkedinprompt.app"
+      "package": "com.linkedinprompt.app",
+      "runtimeVersion": "1.0.0"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -31,6 +35,9 @@
       "eas": {
         "projectId": "f7518203-72be-4547-9e9b-666c94d32cb2"
       }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/f7518203-72be-4547-9e9b-666c94d32cb2"
     }
   }
 }
