@@ -37,7 +37,11 @@
       }
     },
     "updates": {
-      "url": "https://u.expo.dev/f7518203-72be-4547-9e9b-666c94d32cb2"
-    }
+      "url": "https://u.expo.dev/f7518203-72be-4547-9e9b-666c94d32cb2",
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 0
+    },
+    "runtimeVersion": "1.0.0"
   }
 }
