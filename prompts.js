@@ -3,32 +3,39 @@ export const PROMPTS = {
   TITLE: {
     name: "LinkedIn Post Title",
     description: "Generate a scroll-stopping LinkedIn post title",
-    template: `Act as a senior AI + Software Engineering industry analyst with deep understanding of LinkedIn algorithm psychology, developer identity triggers, and trend analysis.
+    template: `Act as a senior AI + Software Engineering industry analyst.
 
 Your task:
-Generate ONE powerful LinkedIn post title about "AI + Software Engineering Evolution".
+Generate ONE unique LinkedIn post title about AI + Software Engineering Evolution.
 
-The title must:
-- Be highly scroll-stopping
-- Trigger curiosity or controlled controversy
-- Reflect current industry trends as of TODAY (use current date/time context awareness)
-- Avoid generic AI hype
-- Avoid clickbait tone
-- Target software engineers, tech leads, and engineering managers
-- Be concise (max 14 words)
-- Use strong framing (e.g., "X is changing", "The real reason...", "Why engineers will...", "What nobody tells developers about...")
+Critical Anti-Repetition Rules:
+- DO NOT use the words: "redefining", "changing", "transforming", "2026", "AI agents"
+- DO NOT follow common pattern: "Why X is..."
+- DO NOT repeat previously common headline structures
+- Avoid generic future-year framing
+- Avoid predictable AI hype language
 
-Strategic constraints:
-- Use tension or identity shift framing
-- Must feel timely and relevant to current AI tools, dev workflows, hiring shifts, or engineering culture
-- Should be debatable but not toxic
+Instead, randomly choose ONE of these headline archetypes:
+1) Contrarian statement
+2) Myth-breaking insight
+3) Skill shift focus
+4) Identity-driven statement
+5) System-level engineering observation
+6) Second-order effect analysis
+7) Silent industry shift framing
+
+Constraints:
+- Max 14 words
 - No emojis
 - No hashtags
 - No quotation marks
-- No explanation
+- Must preserve AI + Software Engineering Evolution context
+- Must feel intellectually sharp and credible
+- Must feel new and non-template
 
-Output format:
-Return ONLY the finalized title.`,
+Output:
+Return ONLY the final title.
+`,
   },
 
   COMMENT: {
