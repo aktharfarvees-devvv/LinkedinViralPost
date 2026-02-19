@@ -38,6 +38,8 @@
       "checkAutomatically": "ON_LOAD",
       "fallbackToCacheTimeout": 0
     },
-    "runtimeVersion": "1.0.0"
+    "runtimeVersion": {
+      "policy": "appVersion"
+    }
   }
 }
