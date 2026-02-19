@@ -221,7 +221,7 @@ Return only the generated image.`,
     "no_explanations": true,
     "ensure_hashtags_are_on_separate_lines_at_end": true
   }
-}`,
+} `,
   },
 
   INFOGRAPHIC: {
