@@ -24,7 +24,7 @@ A lightning-fast mobile app for generating LinkedIn content using predefined pro
 
 - **React Native** - Cross-platform mobile
 - **Expo** - Development & deployment framework
-- **expo-clipboard** - One-click copy feature
+- **expo-clipboard** - One-click copy feature 
 
 ## Installation & Setup
 

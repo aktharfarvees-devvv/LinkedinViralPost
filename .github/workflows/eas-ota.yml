@@ -1,0 +1,29 @@
+name: EAS OTA Update
+
+on:
+  push:
+    branches:
+      - main  # only on main branch
+
+jobs:
+  ota-update:
+    runs-on: ubuntu-latest
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # set token in GitHub
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.19.4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install EAS CLI
+        run: npm install -g eas-cli
+
+      - name: Publish OTA Update
+        run: npx eas-cli update --branch main --message "Auto OTA update from GitHub"

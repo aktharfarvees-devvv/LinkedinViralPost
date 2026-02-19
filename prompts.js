@@ -3,38 +3,61 @@ export const PROMPTS = {
   TITLE: {
     name: "LinkedIn Post Title",
     description: "Generate a scroll-stopping LinkedIn post title",
-    template: `Act as a senior AI + Software Engineering industry analyst.
+    template: `Act as a senior AI + Software Engineering industry analyst with deep understanding of LinkedIn algorithm psychology, developer identity triggers, trend forecasting, and current AI + software development news cycles.
 
 Your task:
-Generate ONE unique LinkedIn post title about AI + Software Engineering Evolution.
+Generate ONE highly unique, scroll-stopping LinkedIn post title about "AI + Software Engineering Evolution".
 
-Critical Anti-Repetition Rules:
-- DO NOT use the words: "redefining", "changing", "transforming", "2026", "AI agents"
-- DO NOT follow common pattern: "Why X is..."
-- DO NOT repeat previously common headline structures
-- Avoid generic future-year framing
-- Avoid predictable AI hype language
+Real-Time Relevance Requirements:
+- Reflect current industry developments as of TODAY
+- Incorporate signals from recent AI model releases, tooling updates, hiring trends, workflow changes, or engineering culture shifts
+- Avoid generic evergreen AI statements
+- Make it feel timely and context-aware
 
-Instead, randomly choose ONE of these headline archetypes:
-1) Contrarian statement
-2) Myth-breaking insight
-3) Skill shift focus
-4) Identity-driven statement
-5) System-level engineering observation
-6) Second-order effect analysis
-7) Silent industry shift framing
+Uniqueness & Anti-Repetition Rules:
+- Do NOT reuse common patterns like:
+  • "Why X is..."
+  • "How X is changing..."
+  • "The future of..."
+  • "AI agents are..."
+  • "In 2026..."
+- Avoid overused verbs such as: redefining, transforming, revolutionizing, disrupting
+- Avoid repeating semantic structures commonly used in AI trend posts
+- Ensure the framing feels structurally different each time this prompt runs
+- Vary tone between analytical, contrarian, system-level, skill-shift, identity-based, or second-order insight
 
-Constraints:
-- Max 14 words
+Strategic Framing Constraints:
+- Use tension, identity shift, or industry recalibration angle
+- Must appeal to software engineers, tech leads, and engineering managers
+- Should feel intellectually sharp and credible
+- Can be debatable but not toxic
+- Avoid hype tone
+- Avoid clickbait exaggeration
+
+Structural Constraints:
+- Maximum 14 words
 - No emojis
 - No hashtags
 - No quotation marks
-- Must preserve AI + Software Engineering Evolution context
-- Must feel intellectually sharp and credible
-- Must feel new and non-template
+- No explanation
 
-Output:
-Return ONLY the final title.
+Cognitive Strategy:
+Before generating, internally choose a different headline archetype from:
+1) Contrarian recalibration
+2) Skill hierarchy shift
+3) Engineering responsibility redistribution
+4) Tooling dependency insight
+5) Hiring market signal
+6) System architecture consequence
+7) Silent culture shift
+8) Second-order AI effect
+9) Developer identity evolution
+10) Technical debt implication of AI integration
+
+Ensure the output does NOT resemble previously generated patterns.
+
+Output format:
+Return ONLY the finalized title.
 `,
   },
 
@@ -198,8 +221,198 @@ Return only the generated image.`,
     "no_explanations": true,
     "ensure_hashtags_are_on_separate_lines_at_end": true
   }
-}
-`,
+}`,
+  },
+
+  INFOGRAPHIC: {
+    name: "Inforgraphic",
+    description: "Generate infographic configuration JSON",
+    template: `{
+  "infographic_type": "hyper_realistic_hand_drawn_paper",
+  "platform_target": "LinkedIn",
+  "visual_theme": "minimalist_tech_thought_leadership", 
+
+  "title_generation": {
+    "source": "analyze_uploaded_resources",
+    "method": "extract_primary_thesis",
+    "style_rules": {
+      "format": "bold_block_handwritten_caps",
+      "max_words": 12,
+      "avoid_clickbait": true,
+      "tone": "strategic_authoritative"
+    }
+  }, 
+
+  "paper_specifications": {
+    "paper_color": "natural_matte_white",
+    "paper_texture": "smooth_real_paper",
+    "edge_characteristics": "slight_natural_paper_irregularity",
+    "margin": "balanced_manual_spacing_not_perfectly_measured"
+  }, 
+
+  "color_palette": {
+    "primary_text": "black_ink",
+    "headings": "dark_blue_ink",
+    "accent_elements": "orange_ink",
+    "maximum_colors": 3,
+    "no_gradients": true,
+    "no_digital_glow": true
+  }, 
+
+  "typography_style": {
+    "appearance": "authentic_handwriting_not_font",
+    "title_style": "thicker_marker_pressure",
+    "section_header_style": "medium_pressure_strokes",
+    "body_style": "lighter_pen_pressure",
+    "line_variation": "natural_human_inconsistency",
+    "baseline": "slightly_imperfect_alignment",
+    "max_words_per_line": 8
+  }, 
+
+  "layout_structure": {
+    "type": "vertical_scroll_stack",
+    "section_count_range": "3_to_5",
+    "spacing": "generous_white_space",
+    "alignment": "visually_balanced_not_grid_perfect",
+    "flow": "clear_top_to_bottom_progression"
+  }, 
+
+  "content_rules": {
+    "extract_sections_from_material": true,
+    "section_format": {
+      "container_style": "hand_drawn_soft_rectangular_boxes",
+      "border_type": "double_line_for_emphasis",
+      "icon_style": "minimal_line_sketch",
+      "bullet_points_limit": 3
+    },
+    "text_density": "low",
+    "clarity_priority": "high"
+  }, 
+
+  "visual_elements": {
+    "arrows": "thick_hand_drawn_with_variable_pressure",
+    "icons": "simple_line_doodles",
+    "underline_style": "slightly_uneven_manual_line",
+    "no_vector_precision": true,
+    "no_perfect_symmetry": true
+  }, 
+
+  "realism_constraints": {
+    "must_look_100_percent_human_drawn": true,
+    "simulate_pen_pressure_variation": true,
+    "simulate_minor_spacing_irregularities": true,
+    "simulate_hand_stroke_overlap": true,
+    "avoid_digital_smoothness": true,
+    "avoid_typographic_uniformity": true,
+    "avoid_perfect_geometry": true
+  }, 
+
+  "composition_style": {
+    "white_space": "premium_clean",
+    "visual_weight_distribution": "balanced",
+    "center_of_gravity": "middle_column_bias",
+    "natural_imperfection_level": "controlled_realism"
+  }, 
+
+  "design_constraints": {
+    "maximum_colors": 3,
+    "no_stock_graphics": true,
+    "no_shadows_or_3d_effects": true,
+    "no_typography_fonts": true,
+    "must_resemble_real_marker_on_paper": true
+  }
+}`,
+  },
+
+  EXISTING_POST_MODIFY: {
+    name: "Existing Post Modify",
+    description: "Transform existing content into a high-impression LinkedIn post",
+    template: `{
+  "role": "Senior AI + Software Engineering Industry Strategist",
+  "objective": "Transform existing content into a high-impression LinkedIn post aligned with AI + Software Engineering Evolution positioning",
+  "input": {
+    "source_content": "{{PASTE_EXISTING_POST_OR_EXTERNAL_CONTENT_HERE}}",
+    "allow_structural_reframing": true,
+    "avoid_plagiarism": true,
+    "extract_core_idea_only": true
+  },
+  "target_audience": [
+    "Software Engineers",
+    "Tech Leads",
+    "Engineering Managers",
+    "AI-focused Developers"
+  ],
+  "strategic_requirements": {
+    "reframing_strategy": {
+      "identify_core_argument": true,
+      "elevate_to_industry_shift_level": true,
+      "connect_to_AI_and_engineering_evolution": true,
+      "introduce_identity_shift_angle": true
+    },
+    "hook_engineering": {
+      "first_line_scroll_stopping": true,
+      "use_controlled_controversy_or_strong_reframe": true,
+      "max_12_words": true
+    },
+    "structure": {
+      "short_lines": true,
+      "mobile_optimized": true,
+      "use_arrow_bullets_when_needed": true,
+      "increase_dwell_time": true
+    },
+    "psychological_triggers": [
+      "curiosity_gap",
+      "industry_evolution",
+      "identity_reinforcement",
+      "controlled_debate"
+    ],
+    "content_depth": {
+      "avoid_generic_AI_hype": true,
+      "inject_engineering_language": true,
+      "include_system_design_or_workflow_implications": true,
+      "show_second_order_effects": true
+    },
+    "authority_positioning": {
+      "sound_like_industry_interpreter": true,
+      "avoid_influencer_style": true,
+      "analytical_and_structured": true
+    },
+    "engagement_engineering": {
+      "encourage_discussion_without_direct_questions": true,
+      "add_strategic_identity_based_takeaway": true,
+      "end_with_strong_reframe_statement": true
+    },
+    "format_constraints": {
+      "no_hashtags_inside_body": true,
+      "no_excessive_emojis": true,
+      "clean_whitespace": true,
+      "length_between_180_and_300_words": true
+    },
+    "character_limit_strategy": {
+      "max_characters": 2200,
+      "min_characters": 1200,
+      "optimize_for_mobile_readability": true
+    },
+    "hashtags": {
+      "count_between": "3-5",
+      "must_be_relevant_and_seo_strategic": true,
+      "mix_broad_and_niche": true,
+      "placed_at_end_only": true,
+      "avoid_spammy_or_irrelevant_tags": true,
+      "align_with_AI_and_software_engineering_positioning": true
+    }
+  },
+  "originality_control": {
+    "do_not_copy_phrases_directly": true,
+    "rewrite_in_fresh_voice": true,
+    "maintain_unique_positioning": true
+  },
+  "output_requirements": {
+    "return_only_final_linkedin_post": true,
+    "no_explanations": true,
+    "ensure_hashtags_are_on_separate_lines_at_end": true
+  }
+}`,
   },
 };
 
