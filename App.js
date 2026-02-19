@@ -37,6 +37,8 @@ export default function App() {
     // For TITLE prompt, skip input and generate directly
     if (promptId === 'TITLE') {
       handleGenerateTitleOutput();
+    } else if (promptId === 'INFOGRAPHIC') {
+      handleGenerateInfographicOutput();
     } else {
       setStep('input');
     }
@@ -49,6 +51,22 @@ export default function App() {
       const prompt = getPromptById('TITLE');
       // For title, we don't need user input - just return the template as output
       setOutput(prompt.template);
+      setStep('output');
+    } catch (error) {
+      Alert.alert('Error', 'Failed to generate output');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGenerateInfographicOutput = async () => {
+    setLoading(true);
+    
+    try {
+      const prompt = getPromptById('INFOGRAPHIC');
+      // For infographic, we don't need user input - just return the template as output
+      setOutput(prompt.template);
+      setOutputType('json');
       setStep('output');
     } catch (error) {
       Alert.alert('Error', 'Failed to generate output');
@@ -90,6 +108,12 @@ export default function App() {
         // Replace topic placeholder in JSON
         processedPrompt = typeof processedPrompt === 'string' 
           ? processedPrompt.replace('{{INSERT_TITLE_HERE}}', userInput.trim())
+          : processedPrompt;
+        setOutputType('json');
+      } else if (selectedPrompt === 'EXISTING_POST_MODIFY') {
+        // For EXISTING_POST_MODIFY, replace with user input
+        processedPrompt = typeof processedPrompt === 'string' 
+          ? processedPrompt.replace('{{PASTE_EXISTING_POST_OR_EXTERNAL_CONTENT_HERE}}', userInput.trim())
           : processedPrompt;
         setOutputType('json');
       } else {
