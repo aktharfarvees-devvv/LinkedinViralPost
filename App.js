@@ -28,12 +28,12 @@ export default function App() {
   const [output, setOutput] = useState('');
   const [outputType, setOutputType] = useState('text'); // 'text' or 'json'
   const [loading, setLoading] = useState(false);
-  const [step, setStep] = useState('prompt-selection'); // prompt-selection, input, output
+  const [step, setStep] = useState('prompt-selection'); 
   const [copyFeedback, setCopyFeedback] = useState(false);
   
   const panValue = useRef(new Animated.ValueXY()).current;
   const screenWidth = Dimensions.get('window').width;
-
+  
   // Pan responder for swipe back gesture
   const panResponder = useRef(
     PanResponder.create({
@@ -77,6 +77,8 @@ export default function App() {
             useNativeDriver: false,
           }).start();
         }
+        //Added Comment
+
       },
     })
   ).current;
