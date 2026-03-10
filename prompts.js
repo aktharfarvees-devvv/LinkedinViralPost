@@ -369,7 +369,7 @@ Return only the generated image.`,
         "Avoid generic tech terms - name the specific layer, component, or decision.",
         "Never a question. The challenge must be a declaration."
       ],
-      "line_2_incomplete_revelation_rules": [
+      "line_2_incomplete_revelation_rules": [ 
         "Must introduce the SCALE or CONSEQUENCE of the challenge - not explain it.",
         "Begin a revelation about what this costs or breaks - stop before the answer.",
         "Frame as: '[Most/Every] [specific engineer type] [does/believes] X. Here is what that costs...' - stop before the cost.",
