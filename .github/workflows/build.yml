@@ -40,8 +40,3 @@ jobs:
         with:
           name: app-release
           path: android/app/build/outputs/apk/release/app-release.apk
-```
-
-Only one line changed:
-```
-actions/upload-artifact@v3  →  actions/upload-artifact@v4
