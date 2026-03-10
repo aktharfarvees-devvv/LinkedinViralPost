@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import * as Updates from 'expo-updates';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -17,6 +18,7 @@ import {
 import * as Clipboard from 'expo-clipboard';
 import { getPromptList, getPromptById } from './prompts';
 
+
 export default function App() {
   const [selectedPrompt, setSelectedPrompt] = useState(null);
   const [userInput, setUserInput] = useState('');
@@ -34,6 +36,17 @@ export default function App() {
   const panValue = useRef(new Animated.ValueXY()).current;
   const screenWidth = Dimensions.get('window').width;
   
+useEffect(() => {
+  async function applyUpdate() {
+    const update = await Updates.checkForUpdateAsync();
+    if (update.isAvailable) {
+      await Updates.fetchUpdateAsync();
+      await Updates.reloadAsync(); // applies immediately
+    }
+  }
+  applyUpdate();
+}, []);
+
   // Pan responder for swipe back gesture
   const panResponder = useRef(
     PanResponder.create({
