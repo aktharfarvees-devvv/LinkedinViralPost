@@ -3,6 +3,7 @@
     "name": "LinkedIn Prompt Generator",
     "slug": "linkedin-prompt-generator",
     "version": "1.0.1",
+    "runtimeVersion": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -11,18 +12,22 @@
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": ["**/*"],
+    "updates": {
+      "url": "https://u.expo.dev/f7518203-72be-4547-9e9b-666c94d32cb2",
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 0
+    },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.linkedinprompt.app",
-      "runtimeVersion": "1.0.0"
+      "bundleIdentifier": "com.linkedinprompt.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.linkedinprompt.app",
-      "runtimeVersion": "1.0.0"
+      "package": "com.linkedinprompt.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -31,12 +36,6 @@
       "eas": {
         "projectId": "f7518203-72be-4547-9e9b-666c94d32cb2"
       }
-    },
-    "updates": {
-      "url": "https://u.expo.dev/f7518203-72be-4547-9e9b-666c94d32cb2",
-      "enabled": true,
-      "checkAutomatically": "ON_LOAD",
-      "fallbackToCacheTimeout": 0
     }
   }
 }
