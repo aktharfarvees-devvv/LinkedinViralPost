@@ -21,6 +21,17 @@
       "channel": "production"
     }
   },
+  "updates": {
+    "development": {
+      "branch": "development"
+    },
+    "preview": {
+      "branch": "main"
+    },
+    "production": {
+      "branch": "production"
+    }
+  },
   "submit": {
     "production": {}
   }
